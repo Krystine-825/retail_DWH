@@ -19,6 +19,14 @@ x-airflow-common: &airflow-common
     - postgres
 
 services:
+  metabase:
+    image: metabase/metabase:latest
+    container_name: metabase
+    ports:
+      - "3000:3000"
+    restart: always
+    depends_on:
+      - postgres
   postgres:
     image: postgres:15
     environment:

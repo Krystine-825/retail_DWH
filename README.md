@@ -76,3 +76,16 @@ Trong quá trình xây dựng pipeline, tôi đã gặp và giải quyết các 
 * **Vấn đề:** dbt báo lỗi `FATAL: password authentication failed for user "airflow"` dù cấu hình đúng mật khẩu.
 * **Nguyên nhân:** Cổng 5432 bị trùng với Postgres cài sẵn trên máy Windows.
 * **Giải pháp:** Đổi port mapping trong `docker-compose.yml` thành `5433:5432` và cấu hình lại `profiles.yml` trỏ về cổng `5433` để đâm chính xác vào DB của Docker.
+
+## 📊 Data Visualization (Metabase)
+Dự án được tích hợp sẵn công cụ BI **Metabase** nguyên bản qua Docker để trực quan hóa dữ liệu trực tiếp từ schema `gold`.
+
+**Cách khởi động và truy cập:**
+1. Chạy lệnh khởi động dịch vụ: `docker-compose up -d metabase`
+2. Truy cập giao diện người dùng tại: `http://localhost:3000`
+3. Kết nối với cơ sở dữ liệu PostgreSQL nội bộ (Host: `postgres`, Port: `5432`, DB: `retail_dwh`).
+
+**Các chỉ số chính (Key Metrics) trên Dashboard:**
+* **Doanh thu theo hệ thống:** Tỷ trọng doanh thu giữa kênh Website, Shopee và POS (Pie Chart).
+* **Top sản phẩm mang lại lợi nhuận:** Thống kê sản lượng và tổng doanh thu theo từng SKU (Bar Chart).
+* **Trạng thái đơn hàng:** Trích xuất các đơn hàng `COMPLETED` chuẩn xác từ bảng `fact_sales`.
